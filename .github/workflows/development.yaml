@@ -1,0 +1,68 @@
+name: Developmet Server [BE] Peionio API
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+  workflow_dispatch:
+
+jobs:
+  nodejs-api:
+    runs-on: ubuntu-latest
+    steps:
+      ##############################
+      # CHECKOUT REPOSITORY ACTION
+      ##############################
+
+      - name: Checkout repository
+        id: actions-checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      ##############################
+      # INSTALL NODEJS ACTION
+      ##############################
+
+      - name: Setup nodejs version
+        id: actions-setup-node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        id: install
+        run: npm install
+
+      - name: Build application
+        id: build
+        run: npm run build
+
+      - name: Remove node_modules and dist folder
+        id: remove
+        run: rm -rf node_modules dist
+
+      #############################
+      # CONNECT SSH ACTION
+      #############################
+
+      - name: Connect to server
+        id: appleboy-ssh-action
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEV_HOST }}
+          port: ${{ secrets.DEV_PORT }}
+          username: ${{ secrets.DEV_USERNAME }}
+          key: ${{ secrets.DEV_KEY }}
+          script: |
+            cd ${{ secrets.DEV_PATH }}
+            
+            git pull origin main --ff
+
+            docker-compose -v
+            docker-compose config
+
+            docker-compose down
+            docker-compose up -d --remove-orphans --build

@@ -1,0 +1,75 @@
+  ##############################
+  # APP SERVICE ENVIRONMENT
+  ##############################
+services:
+  app:
+    container_name: peionio-api
+    restart: always
+    build: .
+    healthcheck:
+      test: "env | grep HOME"
+      retries: 5
+      start_period: 15s
+      interval: 30s
+      timeout: 60s
+    env_file: .env
+    depends_on:
+      - redis
+    expose:
+      - 3000
+    volumes:
+      - .:/usr/app
+      - /usr/app/node_modules
+    networks:
+      - peionio-networks
+  ##############################
+  # CACHING SERVICE ENVIRONMENT
+  ##############################
+  redis:
+    container_name: peionio-redis
+    image: redis:7-alpine
+    restart: always
+    healthcheck:
+      test: "env | grep HOME"
+      retries: 5
+      start_period: 15s
+      interval: 30s
+      timeout: 60s
+    ports:
+      - 6379:6379
+    volumes:
+      - redis:/var/lib/redis
+    networks:
+      - peionio-networks
+  # ===================================
+  # PROXY SERVICES ENVIRONMENT
+  # ===================================
+  nginx:
+    container_name: peionio-nginx
+    image: nginx:alpine
+    restart: always
+    healthcheck:
+      test: "env | grep HOME"
+      retries: 5
+      start_period: 15s
+      interval: 30s
+      timeout: 60s
+    depends_on:
+      - app
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ${PWD}/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - peionio-networks
+# #############################
+# # VOLUME PERSISTENT DATA
+# #############################
+volumes:
+  redis:
+#############################
+# NETWORKS SHARING GROUP
+#############################
+networks:
+  peionio-networks:
