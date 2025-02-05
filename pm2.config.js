@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'peionio-backend',
+      name: 'fake-payment-backend',
       script: 'dist/app.js',
       watch: false,
       exec_mode: 'cluster',

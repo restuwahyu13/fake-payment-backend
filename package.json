@@ -1,7 +1,7 @@
 {
-  "name": "peionio-backend",
+  "name": "fake-payment-backend",
   "version": "0.0.1",
-  "description": "Peionio backend service user management",
+  "description": "Fake payment backend service user management",
   "main": "dist/app.js",
   "scripts": {
     "ts-bin:dev": "cross-env NODE_ENV=development nodemon src/app.ts",
