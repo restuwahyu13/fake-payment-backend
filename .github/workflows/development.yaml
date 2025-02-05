@@ -1,4 +1,4 @@
-name: Developmet Server [BE] Peionio API
+name: Developmet Server [BE] Fake Payment API
 
 on:
   pull_request:
@@ -58,7 +58,7 @@ jobs:
           key: ${{ secrets.DEV_KEY }}
           script: |
             cd ${{ secrets.DEV_PATH }}
-            
+
             git pull origin main --ff
 
             docker-compose -v

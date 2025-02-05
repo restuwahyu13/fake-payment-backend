@@ -3,7 +3,7 @@
   ##############################
 services:
   app:
-    container_name: peionio-api
+    container_name: fake-payment-api
     restart: always
     build: .
     healthcheck:
@@ -21,12 +21,12 @@ services:
       - .:/usr/app
       - /usr/app/node_modules
     networks:
-      - peionio-networks
+      - fake-payment-networks
   ##############################
   # CACHING SERVICE ENVIRONMENT
   ##############################
   redis:
-    container_name: peionio-redis
+    container_name: fake-payment-redis
     image: redis:7-alpine
     restart: always
     healthcheck:
@@ -40,12 +40,12 @@ services:
     volumes:
       - redis:/var/lib/redis
     networks:
-      - peionio-networks
+      - fake-payment-networks
   # ===================================
   # PROXY SERVICES ENVIRONMENT
   # ===================================
   nginx:
-    container_name: peionio-nginx
+    container_name: fake-payment-nginx
     image: nginx:alpine
     restart: always
     healthcheck:
@@ -62,7 +62,7 @@ services:
     volumes:
       - ${PWD}/nginx.conf:/etc/nginx/nginx.conf
     networks:
-      - peionio-networks
+      - fake-payment-networks
 # #############################
 # # VOLUME PERSISTENT DATA
 # #############################
@@ -72,4 +72,4 @@ volumes:
 # NETWORKS SHARING GROUP
 #############################
 networks:
-  peionio-networks:
+  fake-payment-networks:

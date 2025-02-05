@@ -12,17 +12,16 @@
     "dev": "npm run ts-bin:dev"
   },
   "author": {
-    "name": "Jason Lee",
-    "email": "jasonlee@peionio.com",
-    "url": "https://github.com/Peionio"
+    "name": "Restu Wahyu Saputra",
+    "email": "restuwahyu13@gmail.com",
+    "url": "https://github.com/restuwahyu13"
   },
   "maintainers": [
-    "Jason Lee",
     "Restu Wahyu Saputra"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Peionio/peionio-backend"
+    "url": "https://github.com/restuwahyu13/fake-payment-backend"
   },
   "license": "UNLICENSED",
   "engines": {
