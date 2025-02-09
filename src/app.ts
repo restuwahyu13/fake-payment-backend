@@ -3,7 +3,6 @@ import 'reflect-metadata'
 import { OutgoingMessage } from 'node:http'
 import express, { Express, Request, Response, Router } from 'express'
 import { StatusCodes as status } from 'http-status-codes'
-import bodyParser from 'body-parser'
 import cors from 'cors'
 import helmet from 'helmet'
 import morgan from 'morgan'
@@ -51,9 +50,9 @@ class App {
   }
 
   private middleware(): void {
-    this.app.use(bodyParser.json({ limit: '3mb' }))
-    this.app.use(bodyParser.raw({ inflate: true, limit: '3mb', type: 'application/json' }))
-    this.app.use(bodyParser.urlencoded({ extended: true }))
+    this.app.use(express.json({ limit: '3mb' }))
+    this.app.use(express.raw({ inflate: true, limit: '3mb', type: 'application/json' }))
+    this.app.use(express.urlencoded({ extended: true }))
     this.app.use(helmet({ contentSecurityPolicy: false }))
     this.app.use(hpp({ checkBody: true, checkQuery: true }))
     this.app.use(
